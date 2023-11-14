@@ -1,11 +1,21 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import MenubarComponent from './components/Header'
+import Products from './pages/Products'
+import Categories from './pages/Categories'
+import Users from './pages/Users'
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-    </Routes>
+    <>
+      <MenubarComponent />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/products" element={<Products />}></Route>
+        <Route path="/categories" element={<Categories />}></Route>
+        <Route path="/users" element={<Users />}></Route>
+      </Routes>
+    </>
   )
 }
 

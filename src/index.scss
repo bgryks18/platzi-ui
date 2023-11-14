@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bgcolor;
+  }
+  .container {
+    @apply mx-auto;
+    max-width: 1920px;
+    @screen 2xl {
+      max-width: 1440px !important;
+    }
+    @screen xl {
+      max-width: 1280x !important;
+    }
+    @screen lg {
+      max-width: 991px !important;
+    }
+    @screen md {
+      max-width: 740px !important;
+    }
+  }
+}
