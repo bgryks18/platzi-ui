@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from '../components/Table/Table'
 import { ColumnDef } from '@tanstack/react-table'
+import { getProducts } from '../api/product'
 
 const columns: ColumnDef<any>[] = [
   {
@@ -18,15 +19,12 @@ const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
+    accessorKey: 'title',
+    header: 'Title',
   },
+
   {
-    accessorKey: 'email',
-    header: 'Email',
-  },
-  {
-    accessorKey: 'amount',
+    accessorKey: 'price',
     header: ({ column }) => {
       return (
         <button
@@ -39,32 +37,39 @@ const columns: ColumnDef<any>[] = [
       )
     },
   },
+  {
+    accessorKey: 'description',
+    header: 'Description',
+  },
+  {
+    accessorKey: 'category',
+    header: 'Category',
+    accessorFn(row, i) {
+      return row.category.name
+    },
+  },
 ]
 
-async function getData(): Promise<any[]> {
-  return Array(40)
-    .fill(null)
-    .map((_, index) => ({
-      id: index,
-      amount: Math.round(Math.random() * 100),
-      status:
-        Math.ceil(Math.random() * 10) % 2 === 0 ? 'pending' : 'processing',
-      email: 'm@example.com',
-    }))
-}
-
-const data = await getData()
-
 const Products = () => {
+  const [list, setList] = useState<any>([])
+
+  const fetchProducts = async ({
+    limit,
+    offset,
+  }: {
+    limit: number
+    offset: number
+  }) => {
+    console.log('hey')
+    const { data } = await getProducts({ limit, offset })
+    setList((prev: any[]) => [...prev, ...data])
+  }
+  useEffect(() => {
+    fetchProducts({ limit: 10, offset: 0 })
+  }, [])
   return (
     <div>
-      <DataTable
-        columns={columns}
-        data={data}
-        renderFilterInputs={(table) => {
-          return <>SAD</>
-        }}
-      />
+      <DataTable columns={columns} data={list} refetch={fetchProducts} />
     </div>
   )
 }

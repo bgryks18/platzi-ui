@@ -24,6 +24,8 @@ import {
   TableRow,
 } from './TableBase'
 import { Button } from '../Button/Button'
+import API from '../../api/api'
+import { getProducts } from '../../api/product'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -38,6 +40,13 @@ interface DataTableProps<TData, TValue> {
   noResultMessage?: string | ReactElement
   loadingMessage?: string | ReactElement
   isLoading?: boolean
+  refetch: ({
+    limit,
+    offset,
+  }: {
+    limit: number
+    offset: number
+  }) => Promise<TData>
 }
 
 function DataTable<TData, TValue>({
@@ -52,6 +61,7 @@ function DataTable<TData, TValue>({
   loadingMessage = 'Loading...',
   noResultMessage = isLoading ? loadingMessage : 'No result found.',
   columnFilters,
+  refetch,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [page, setPage] = useState<PaginationState>({
@@ -69,14 +79,15 @@ function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    onPaginationChange: (updater) => {
+    onPaginationChange: async (updater) => {
       if (typeof updater === 'function') {
         const newState = updater(page)
+        await refetch({ limit: newState.pageSize, offset: newState.pageIndex })
         setPage(newState)
       }
     },
     autoResetPageIndex: false,
-    pageCount: Math.ceil(data.length / page.pageSize),
+    pageCount: Math.ceil(66 / page.pageSize),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setFilters,
