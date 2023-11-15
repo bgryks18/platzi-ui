@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import MenubarComponent from './components/Header'
+import MenubarComponent from './components/Header/Header'
 import Products from './pages/Products'
 import Categories from './pages/Categories'
 import Users from './pages/Users'
