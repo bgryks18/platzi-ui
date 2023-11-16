@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
 import DataTable from '../components/Table/Table'
 import { ColumnDef } from '@tanstack/react-table'
-import { getProducts } from '../api/product'
+import useList from '../hooks/useList'
+import FilterInput from '../components/FilterInput/FilterInput'
+import FilterSelectInput from '../components/FilterSelectInput/FilterSelectInput'
+import { Input } from '../components/Input/Input'
 
 const columns: ColumnDef<any>[] = [
   {
@@ -21,6 +23,13 @@ const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'title',
     header: 'Title',
+    cell(props) {
+      return (
+        <div className="max-w-[300px] break-words ">
+          {props.cell.row.original.title}
+        </div>
+      )
+    },
   },
 
   {
@@ -40,36 +49,72 @@ const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'description',
     header: 'Description',
+    cell(props) {
+      return (
+        <div className="max-w-[500px] break-words ">
+          {props.cell.row.original.description}
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'category',
     header: 'Category',
-    accessorFn(row, i) {
-      return row.category.name
+    cell(props) {
+      return (
+        <div className="mr-auto max-w-[100px] break-words ">
+          {props.cell.row.original.category?.name}
+        </div>
+      )
     },
   },
 ]
 
 const Products = () => {
-  const [list, setList] = useState<any>([])
+  const { data, isLoading } = useList({
+    moduleName: 'products',
+  })
 
-  const fetchProducts = async ({
-    limit,
-    offset,
-  }: {
-    limit: number
-    offset: number
-  }) => {
-    console.log('hey')
-    const { data } = await getProducts({ limit, offset })
-    setList((prev: any[]) => [...prev, ...data])
-  }
-  useEffect(() => {
-    fetchProducts({ limit: 10, offset: 0 })
-  }, [])
   return (
-    <div>
-      <DataTable columns={columns} data={list} refetch={fetchProducts} />
+    <div className="container mt-3">
+      <DataTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        // columnFilters={[{ id: 'title', value: 'Only' }]}
+        renderFilterInputs={() => {
+          return (
+            <>
+              <FilterInput
+                name="price_min"
+                placeholder="Min. Price"
+                className="w-[250px]"
+              />
+              <FilterInput
+                name="price_max"
+                placeholder="Max. Price"
+                className="w-[250px]"
+              />
+              <FilterSelectInput
+                name="categoryId"
+                placeholder="Filter By Category"
+                choices={[
+                  {
+                    value: '2',
+                    label: 'Electronics',
+                  },
+                  {
+                    value: '3',
+                    label: 'Furniture',
+                  },
+                ]}
+                className="w-[250px]"
+                label="Filter By Category"
+              />
+            </>
+          )
+        }}
+      />
     </div>
   )
 }

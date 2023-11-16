@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import clsx from 'clsx'
 import * as Menubar from '@radix-ui/react-menubar'
-import * as Form from '@radix-ui/react-form'
+import SearchBox from '../SearchBox/SearchBox'
 
 const Header = () => {
   return (
@@ -13,7 +13,7 @@ const Header = () => {
         <MenuLinkItem label="Categories" to="/categories" />
       </div>
       <div className="w-[300px] md:w-[100%]">
-        <SearchBox />
+        <RightElement />
       </div>
     </Menubar.Root>
   )
@@ -43,19 +43,6 @@ const MenuLinkItem = ({ to, label }: MenuBarLinkItemProps) => {
   )
 }
 
-const SearchBox = () => {
-  return (
-    <Form.Root>
-      <Form.Field className="grid" name="q">
-        <Form.Control asChild>
-          <input
-            className="text-slate-blackA6 box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded-[4px] border-neutral-500  px-[10px] text-[14px] leading-none shadow-[0_0_0_1px] shadow-blackA6 outline-none"
-            type="text"
-            required
-            placeholder="Search Products"
-          />
-        </Form.Control>
-      </Form.Field>
-    </Form.Root>
-  )
+const RightElement = () => {
+  return <SearchBox />
 }
