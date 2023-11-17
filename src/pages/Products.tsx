@@ -6,8 +6,6 @@ import FilterSelectInput from 'components/FilterSelectInput/FilterSelectInput'
 import DeleteButton from 'components/DeleteButton/DeleteButton'
 import EditButton from 'components/EditButton/EditButton'
 import CreateButton from 'components/CreateButton/CreateButton'
-import ToastComponent from '@/components/Toast/Toast'
-import Toast from '@/components/Toast/Toast'
 
 const columns: ColumnDef<any>[] = [
   {

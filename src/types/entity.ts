@@ -7,4 +7,20 @@ export interface ProductEntity {
   images: string[]
 }
 
-export type Entity = ProductEntity | any
+export interface CategoryEntity {
+  creationAt: string
+  id: number
+  image: string
+  name: string
+  updatedAt: string
+}
+
+export interface UserEntity {
+  id: number
+  email: string
+  password: string
+  name: string
+  role: string
+  avatar: string
+}
+export type Entity = ProductEntity | CategoryEntity | UserEntity

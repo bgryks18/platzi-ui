@@ -40,7 +40,6 @@ const FormDialog = ({
   record,
 }: AlertProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-
   const form = useForm({
     values: record,
   })
