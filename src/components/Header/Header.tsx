@@ -6,11 +6,12 @@ import SearchBox from '../SearchBox/SearchBox'
 
 const Header = () => {
   return (
-    <Menubar.Root className="container sticky top-0 z-10 flex flex-wrap justify-between gap-2 rounded-md bg-white p-[8px] px-[24px] shadow-[0_2px_10px] shadow-blackA4">
+    <Menubar.Root className="container sticky top-0 flex min-h-[50px] flex-wrap justify-between gap-2 rounded-md bg-white p-[8px] px-[24px] shadow-[0_2px_10px] shadow-blackA4">
       <div className="flex gap-2">
         <MenuLinkItem label="Home" to="/" />
         <MenuLinkItem label="Products" to="/products" />
         <MenuLinkItem label="Categories" to="/categories" />
+        <MenuLinkItem label="Users" to="/users" />
       </div>
       <div className="w-[300px] md:w-[100%]">
         <RightElement />

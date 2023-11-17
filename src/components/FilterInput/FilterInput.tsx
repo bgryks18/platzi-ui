@@ -4,21 +4,19 @@ import { debounce } from 'lodash'
 import { removeFilter, setFilter } from '../../store/list'
 import { useDispatch } from 'react-redux'
 
-const FilterInput = (props: InputProps) => {
+const FilterInput = (props: InputProps & { resource: string }) => {
   const dispatch = useDispatch()
   const handleFilterInputChange = debounce((params) => {
-    console.log('----', params)
-    dispatch(setFilter({ filter: params }))
+    dispatch(setFilter({ filter: params, resource: props.resource }))
   }, 200)
 
   const handleFilterInputReset = debounce(() => {
-    dispatch(removeFilter(props.name || ''))
+    dispatch(removeFilter({ name: props.name || '', resource: props.resource }))
   }, 200)
 
   return (
     <Input
       onChange={(e) => {
-        console.log('hey')
         if (!e.target.value.trim()) {
           handleFilterInputReset()
         } else {

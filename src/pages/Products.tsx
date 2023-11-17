@@ -1,9 +1,11 @@
-import DataTable from '../components/Table/Table'
+import DataTable from 'components/Table/Table'
 import { ColumnDef } from '@tanstack/react-table'
-import useList from '../hooks/useList'
-import FilterInput from '../components/FilterInput/FilterInput'
-import FilterSelectInput from '../components/FilterSelectInput/FilterSelectInput'
-import { Input } from '../components/Input/Input'
+import useList from 'hooks/useList'
+import FilterInput from 'components/FilterInput/FilterInput'
+import FilterSelectInput from 'components/FilterSelectInput/FilterSelectInput'
+import DeleteButton from 'components/DeleteButton/DeleteButton'
+import EditButton from 'components/EditButton/EditButton'
+import CreateButton from 'components/CreateButton/CreateButton'
 
 const columns: ColumnDef<any>[] = [
   {
@@ -11,11 +13,9 @@ const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <button
-          // variant={column.getIsSorted() ? 'default' : 'ghost'}
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           ID
-          {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
         </button>
       )
     },
@@ -68,6 +68,25 @@ const columns: ColumnDef<any>[] = [
       )
     },
   },
+  {
+    accessorKey: '',
+    header: 'Actions',
+    cell(props) {
+      return (
+        <div className="mr-auto flex max-w-[100px] gap-2 break-words">
+          <DeleteButton row={props.row.original} resource="products" />
+          <EditButton
+            row={props.row.original}
+            resource="products"
+            fields={[
+              { id: 'title', label: 'Title' },
+              { id: 'description', label: 'Description', type: 'textarea' },
+            ]}
+          />
+        </div>
+      )
+    },
+  },
 ]
 
 const Products = () => {
@@ -81,19 +100,61 @@ const Products = () => {
         columns={columns}
         data={data}
         isLoading={isLoading}
-        // columnFilters={[{ id: 'title', value: 'Only' }]}
         renderFilterInputs={() => {
           return (
             <>
+              <div className="mr-auto">
+                <CreateButton
+                  resource="products"
+                  fields={[
+                    { id: 'title', label: 'Title' },
+                    {
+                      id: 'description',
+                      label: 'Description',
+                      type: 'textarea',
+                    },
+                    { id: 'price', label: 'Price' },
+                    {
+                      id: 'categoryId',
+                      label: 'Category',
+                      type: 'select',
+                      choices: [
+                        {
+                          value: '2',
+                          label: 'Electronics',
+                        },
+                        {
+                          value: '3',
+                          label: 'Furniture',
+                        },
+                      ],
+                    },
+                    {
+                      id: 'images',
+                      label: 'Images',
+                      type: 'fieldarray',
+                    },
+                  ]}
+                  transform={(data) => {
+                    const { images } = data
+                    return {
+                      ...data,
+                      images: images?.map((item: any) => item.value),
+                    }
+                  }}
+                />
+              </div>
               <FilterInput
                 name="price_min"
                 placeholder="Min. Price"
-                className="w-[250px]"
+                className="!w-[250px]"
+                resource="products"
               />
               <FilterInput
                 name="price_max"
                 placeholder="Max. Price"
-                className="w-[250px]"
+                className="!w-[250px]"
+                resource="products"
               />
               <FilterSelectInput
                 name="categoryId"
@@ -110,6 +171,7 @@ const Products = () => {
                 ]}
                 className="w-[250px]"
                 label="Filter By Category"
+                resource={'products'}
               />
             </>
           )

@@ -6,8 +6,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../Select/Select'
-import { removeFilter, setFilter } from '../../store/list'
+} from 'components/Select/Select'
+import { removeFilter, setFilter } from 'store/list'
 
 interface FilterSelectInputProps {
   choices: { value: string; label: string }[]
@@ -23,7 +23,8 @@ const FilterSelectInput = ({
   name,
   className,
   label,
-}: FilterSelectInputProps) => {
+  resource,
+}: FilterSelectInputProps & { resource: string }) => {
   const dispatch = useDispatch()
 
   return (
@@ -32,9 +33,9 @@ const FilterSelectInput = ({
       <Select
         onValueChange={(value) => {
           if (value == 'none') {
-            dispatch(removeFilter(name))
+            dispatch(removeFilter({ name, resource }))
           } else {
-            dispatch(setFilter({ filter: { [name]: value } }))
+            dispatch(setFilter({ filter: { [name]: value }, resource }))
           }
         }}
         defaultValue="none"

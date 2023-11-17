@@ -21,7 +21,6 @@ const responseError = (error: AxiosError): Promise<AxiosError> =>
   Promise.reject(error)
 
 const responseBefore = (response: AxiosResponse): AxiosResponse => {
-  const count = response.headers['x-bone-count'] || 66
   return response
 }
 

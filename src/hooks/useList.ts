@@ -6,7 +6,13 @@ import API from '../api/api'
 import { setList } from '../store/list'
 import { Entity } from '../types/entity'
 
-const useList = ({ moduleName }: { moduleName: string }) => {
+const useList = ({
+  moduleName,
+  pagination = true,
+}: {
+  moduleName: string
+  pagination?: boolean
+}) => {
   const list = useSelector((state: RootState) => state.list)
 
   console.log('list', list)
@@ -21,14 +27,16 @@ const useList = ({ moduleName }: { moduleName: string }) => {
     return new Promise((resolve, reject) =>
       API.get(`/${moduleName}`, {
         params: {
-          offset: list.pageIndex * list.limit,
-          limit: list.limit,
-          ...list.filter,
+          offset: pagination ? list.pageIndex * list.limit : undefined,
+          limit: pagination ? list.limit : undefined,
+          ...list.filter[moduleName],
         },
       })
         .then((response) => {
           const count = response.headers['x-bone-count'] || 30 //test
-          dispatch(setList({ data: response.data, count }))
+          dispatch(
+            setList({ count, data: response.data, resource: moduleName })
+          )
           resolve(response.data)
         })
         .catch((e) => {
@@ -41,13 +49,13 @@ const useList = ({ moduleName }: { moduleName: string }) => {
 
   useEffect(() => {
     fetchList()
-  }, [list.pageIndex, list.limit, list.filter])
+  }, [list.pageIndex, list.limit, list.filter[moduleName]])
 
   return {
     mutate: fetchList,
     isIdle,
     isLoading,
-    data,
+    data: list.data,
     ...rest,
   }
 }
