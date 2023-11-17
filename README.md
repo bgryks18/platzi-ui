@@ -1,3 +1,15 @@
+# Platzi Ui
+This is a basic web application fetchin an external Api source built with Vite, React, Tailwind Css technologies.
+
+## To install in your local
+
+    git clone https://github.com/bgryks18/platzi-ui.git
+    cd platzi-ui
+    yarn install
+    yarn dev
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
