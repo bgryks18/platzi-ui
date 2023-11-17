@@ -1,4 +1,3 @@
-import React from 'react'
 import AlertButton from '../AlertDialog/AlertDialog'
 import { useDispatch } from 'react-redux'
 import { removeItem } from '../../store/list'

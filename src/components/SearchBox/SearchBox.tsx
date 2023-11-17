@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterInput from '../FilterInput/FilterInput'
 import { useMatch } from 'react-router-dom'
 

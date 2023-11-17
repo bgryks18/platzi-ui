@@ -1,4 +1,3 @@
-import React from 'react'
 import { Input, InputProps } from '../Input/Input'
 import { debounce } from 'lodash'
 import { removeFilter, setFilter } from '../../store/list'

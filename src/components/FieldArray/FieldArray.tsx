@@ -1,5 +1,4 @@
-import React from 'react'
-import { useFieldArray, useForm, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Input } from 'components/Input/Input'
 import { Button } from '../Button/Button'
 import { Plus, X } from 'lucide-react'
@@ -12,12 +11,10 @@ const FieldArray = ({
   placeholder?: string
 }) => {
   const { control, register } = useFormContext()
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control, // control props comes from useForm (optional: if you are using FormContext)
-      name, // unique name for your Field Array
-    }
-  )
+  const { fields, append, remove } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name, // unique name for your Field Array
+  })
 
   return (
     <div className="flex flex-col flex-wrap gap-2 ">
@@ -32,7 +29,6 @@ const FieldArray = ({
       </Button>
 
       {fields.map((item, index) => {
-        console.log('item', item)
         return (
           <div key={item.id} className="flex items-center">
             <Input

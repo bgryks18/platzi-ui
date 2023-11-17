@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { updateItem } from '../../api/service'
 import FormDialog from '../FormDialog/FormDialog'

@@ -1,9 +1,7 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createItem } from '../../api/service'
 import FormDialog from '../FormDialog/FormDialog'
 import { addItem } from '@/store/list'
-import { AxiosError } from 'axios'
 import { setToast } from '@/store/ui'
 
 const CreateButton = ({

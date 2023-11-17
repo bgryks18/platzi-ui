@@ -1,4 +1,3 @@
-import React from 'react'
 import * as Toast from '@radix-ui/react-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store'

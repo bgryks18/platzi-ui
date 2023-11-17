@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { Button } from '../Button/Button'
 
