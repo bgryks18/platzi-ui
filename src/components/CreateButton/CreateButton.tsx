@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { createItem } from '../../api/service'
 import FormDialog from '../FormDialog/FormDialog'
 import { addItem } from '@/store/list'
+import { AxiosError } from 'axios'
+import { setToast } from '@/store/ui'
 
 const CreateButton = ({
   resource,
@@ -36,7 +38,26 @@ const CreateButton = ({
             })
             dispatch(addItem({ data: newData }))
             handleCloseDialog()
-          } catch (e) {
+            dispatch(
+              setToast({
+                toast: {
+                  label: 'Success',
+                  description: 'Data was created',
+                },
+              })
+            )
+          } catch (e: any) {
+            const error = e?.response?.data?.message
+            const title = e?.message
+            const errMessage = Array.isArray(error) ? error.join(', ') : error
+            dispatch(
+              setToast({
+                toast: {
+                  label: title,
+                  description: errMessage,
+                },
+              })
+            )
             console.log('e', e)
           }
         }}

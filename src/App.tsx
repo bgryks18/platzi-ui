@@ -4,6 +4,7 @@ import MenubarComponent from './components/Header/Header'
 import Products from './pages/Products'
 import Categories from './pages/Categories'
 import Users from './pages/Users'
+import Toast from './components/Toast/Toast'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/categories" element={<Categories />}></Route>
         <Route path="/users" element={<Users />}></Route>
       </Routes>
+      <Toast />
     </>
   )
 }

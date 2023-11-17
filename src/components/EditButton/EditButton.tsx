@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { updateItem } from '../../api/service'
 import FormDialog from '../FormDialog/FormDialog'
 import { setItem } from '../../store/list'
+import { setToast } from '@/store/ui'
 
 const EditButton = ({
   row,
@@ -41,7 +42,26 @@ const EditButton = ({
             })
             dispatch(setItem({ data: updatedData }))
             handleCloseDialog()
-          } catch (e) {
+            dispatch(
+              setToast({
+                toast: {
+                  label: 'Success',
+                  description: 'Data was updated',
+                },
+              })
+            )
+          } catch (e: any) {
+            const error = e?.response?.data?.message
+            const title = e?.message
+            const errMessage = Array.isArray(error) ? error.join(', ') : error
+            dispatch(
+              setToast({
+                toast: {
+                  label: title,
+                  description: errMessage,
+                },
+              })
+            )
             console.log('e', e)
           }
         }}
