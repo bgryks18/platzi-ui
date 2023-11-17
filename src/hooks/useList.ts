@@ -15,7 +15,6 @@ const useList = ({
 }) => {
   const list = useSelector((state: RootState) => state.list)
 
-  console.log('list', list)
   const dispatch = useDispatch()
   const {
     mutate: fetchList,
