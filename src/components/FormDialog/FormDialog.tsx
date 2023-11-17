@@ -135,7 +135,7 @@ const FormDialog = ({
 
               <div className="mt-3 flex w-full items-center justify-end gap-3">
                 <Button
-                  className="h-[40px] w-[80px] bg-white px-[15px] font-medium leading-none  !text-violet11 outline-none hover:bg-mauve3"
+                  className="h-[40px] !w-[80px] bg-white px-[15px] font-medium leading-none  !text-violet11 outline-none hover:!bg-mauve3"
                   onClick={() => {
                     setIsOpen(false)
                   }}
@@ -143,7 +143,7 @@ const FormDialog = ({
                   Cancel
                 </Button>
                 <Form.Submit className="flex w-full justify-end" asChild>
-                  <Button className="h-[40px] w-[80px]" loading={isLoading}>
+                  <Button className="h-[40px] !w-[80px]" loading={isLoading}>
                     Save
                   </Button>
                 </Form.Submit>
