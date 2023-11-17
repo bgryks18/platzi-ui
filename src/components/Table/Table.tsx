@@ -105,6 +105,7 @@ function DataTable<TData, TValue>({
       }
     },
     autoResetPageIndex: false,
+    manualPagination: type === 'server',
     pageCount:
       type === 'server'
         ? Math.ceil(paginationState.count / paginationState.pageSize)

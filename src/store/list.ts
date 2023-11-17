@@ -51,7 +51,7 @@ const listSlice = createSlice({
 
       return {
         ...state,
-        data: uniqBy([...state.data, ...action.payload.data], 'id'),
+        data: action.payload.data,
         count: action.payload.count,
         resource: action.payload.resource,
       }
